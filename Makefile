@@ -6,14 +6,14 @@
 #    By: rsathiad <3kiraj@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/09 08:38:15 by rsathiad          #+#    #+#              #
-#    Updated: 2018/12/08 16:39:54 by rsathiad         ###   ########.fr        #
+#    Updated: 2019/01/27 14:55:07 by rsathiad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_select
 OBJ = *.o
 
-SRC = srcs/main.c srcs/error.c
+SRC = srcs/main.c srcs/error.c srcs/keyboard.c srcs/terminal.c srcs/list.c srcs/window.c
 HDR = includes/select.h
 
 all: LIBFT select 

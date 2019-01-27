@@ -6,7 +6,6 @@ int main (int ac,char **av)
 {
     char *buf;
     char *termtype;
-    struct termios *term;
 
 
     buf = malloc(2048);
@@ -19,7 +18,6 @@ int main (int ac,char **av)
         {
             (void)av;
             ft_printf("Terminal found: %s\n", termtype);
-            interrogate_terminal(termtype);
             //selection(termtype,av);
     
         }
@@ -30,18 +28,18 @@ int main (int ac,char **av)
    return (0);     
 }
 
-void interrogate_terminal(char *termtype)
+/*void interrogate_terminal(char *termtype)
 {
-  /*am is "automatic wrap"
+  am is "automatic wrap"
     cl is 
     co is 
     cm 
-    */
+   
 }
 
 char *selection(char *termtype, char **av)
 {
-    t_list *ptr_to_list;
+    t_select *ptr_to_list;
     char *selected;
 
     selected = NULL;
@@ -50,8 +48,9 @@ char *selection(char *termtype, char **av)
     return (selected);
 }
 
-char *display_list_and_wait_for_selection(t_list *list_ptr)
+char *display_list_and_wait_for_selection(t_select *list_ptr)
 {
 
     
 }
+*/

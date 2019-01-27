@@ -1,8 +1,8 @@
 #include "../includes/ft_select.h"
 
-t_list *copy_arguments_to_linked_list(char ** av)
+t_options *copy_arguments_to_linked_list(char **av)
 {
-    t_list *ret;
+    t_options *ret;
     int count;
 
     count = 0;
@@ -12,12 +12,13 @@ t_list *copy_arguments_to_linked_list(char ** av)
     return (ret);
 }
 
-void create_and_push_list_nodes(t_list **ret, char *name)
+void create_and_push_list_nodes(t_options **ret, char *name)
 {
-    t_list *new;
-    t_list *ptr;
+    t_options *new;
+    t_options *ptr;
 
     ptr = *ret;
+    new = malloc(sizeof(t_options));
     new->name = name;
     new->next = NULL;
     if (*ret == NULL)
