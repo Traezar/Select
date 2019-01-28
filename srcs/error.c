@@ -12,5 +12,5 @@ int select_usage()
 int perror_exit(char *str)
 {
     ft_printf("ft_select: %s", str);
-    exit(0);
+    exit(1);
 }

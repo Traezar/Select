@@ -15,16 +15,19 @@ typedef struct s_options
 
 typedef struct s_select
 {
-    struct s_options *next;
+    struct s_options *options;
     int screenrows;
     int screencols;
+    char *termtype;
     struct termios original;
 } t_select;
 
 int select_usage(void);
 int perror_exit(char *str);
-void enableRawMode(struct termios *original);
-void disableRawMode(struct termios *original);
+void enableRawMode(struct termios original);
+void disableRawMode(struct termios original);
 void create_and_push_list_nodes(t_options **ret, char *name);
-t_options *copy_arguments_to_linked_list(char **av);
+char *display_list_and_wait_for_selection(t_select *list_ptr);
+t_options *copy_arguments_to_linked_list(char **av, int ac);
+char *selection(t_select *select, char **av, int ac);
 #endif
