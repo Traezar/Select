@@ -13,8 +13,8 @@
 NAME = ft_select
 OBJ = *.o
 
-SRC = srcs/main.c srcs/error.c srcs/keyboard.c srcs/terminal.c srcs/list.c srcs/window.c
-HDR = includes/select.h
+SRC = srcs/main.c srcs/error.c srcs/keyboard.c srcs/terminal.c srcs/list.c srcs/window.c srcs/cursor.c
+HDR = includes/select.h 
 
 all: LIBFT select 
 

@@ -11,6 +11,8 @@ int select_usage()
 
 int perror_exit(char *str)
 {
+    write(STDOUT_FILENO, "\x1b[2J", 4);
+    write(STDOUT_FILENO, "\x1b[H",3);
     ft_printf("ft_select: %s", str);
     exit(1);
 }

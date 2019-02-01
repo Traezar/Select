@@ -28,32 +28,35 @@ char *selection(t_select *select, char **av, int ac)
     char *selected;
 
     selected = NULL;
-    ft_printf("Terminal type is :%s\nEntered Selection\n",select->termtype);
     enableRawMode(select->original);
-    ft_printf("Raw Mode Enabled\n");
+    intitalise_select_display(&select);
     select->options = copy_arguments_to_linked_list(av, ac);
-    ft_printf("arguments copied\n");
-    selected = display_list_and_wait_for_selection(select);
+    selected = display_list_and_wait_for_selection(&select);
     return(selected);
 }
 
-char *display_list_and_wait_for_selection(t_select *select)
+char *display_list_and_wait_for_selection(t_select **select)
 {
     char c;
 
-    (void)select;
     c = 0;
     ft_printf("reading from stdin\n");
     while(1)
     {
-        if(read(STDIN_FILENO, &c, 1) == -1)
-            perror_exit("selection: Read returned: -1"); 
-        if (iscntrl(c)) 
-            ft_printf("%d\n", c);
-        else
-            ft_printf("%d ('%c')\n", c, c);
-        if (c == 27)
-            break;
+        process_input(select);
     }
     return ("DONE!\n");
+}
+
+void intitalise_select_display(t_select **ptr_select)
+{
+    int row;
+    int col;
+
+    row = (*ptr_select)->screenrows;
+    col = (*ptr_select)->screenrows;
+    init_cursor(ptr_select);
+    if (get_window_size(&row, &col) == -1)
+        perror_exit("failure to initialise select screen");
+
 }
