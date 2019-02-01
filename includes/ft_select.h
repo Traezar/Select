@@ -15,6 +15,7 @@
 #define LEFT_KEYCODE 68
 #define RIGHT_KEYCODE 67
 #define SPACE_KEYCODE 0
+#define DEL_KEYCODE 30
 
 typedef struct s_select
 {
@@ -59,6 +60,7 @@ char readinput();
 void process_input(t_select **select);
 void escape_program(t_select **select);
 void select_deselect(t_select **select);
+void delete_option(t_select **select);
 
 /*window.c*/
 int get_window_size(int *rows, int *cols);
