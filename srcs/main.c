@@ -40,6 +40,7 @@ char *display_list_and_wait_for_selection(t_select **select)
     char c;
 
     c = 0;
+    print_to_screen(*select);
     ft_printf("reading from stdin\n");
     while(1)
     {

@@ -9,6 +9,10 @@
 #include <term.h>
 #include <signal.h>
 #include "../libft/includes/libft.h"
+#define BOLD \e[1m
+#define UNDER_ \e[4m
+#define REV_ \e[7m
+#define UNDER_REV \e[4;7m
 #define ESC_KEYCODE 27
 #define UP_KEYCODE 65
 #define DOWN_KEYCODE 66
@@ -33,10 +37,14 @@ typedef struct s_dispatch
     int key;
     void (*f)(t_select **);
 } t_dispatch;
+
 typedef struct s_options 
 {
     char *name;
     struct s_options *next;
+    bool selected;
+    bool cursor;
+    bool deleted; 
 } t_options;
 
 
@@ -64,6 +72,8 @@ void delete_option(t_select **select);
 
 /*window.c*/
 int get_window_size(int *rows, int *cols);
+void print_to_screen(t_select *select);
+int check_print_type(t_options *list);
 
 /*list.c*/
 void create_and_push_list_nodes(t_options **ret, char *name);
