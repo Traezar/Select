@@ -28,9 +28,11 @@ char *selection(t_select *select, char **av, int ac)
     char *selected;
 
     selected = NULL;
-    enableRawMode(select->original);
+    select->original = enableRawMode();
     intitalise_select_display(&select);
     select->options = copy_arguments_to_linked_list(av, ac);
+    select->original_options = NULL;
+    duplicate_list(select->options, &select->original_options);
     selected = display_list_and_wait_for_selection(&select);
     return(selected);
 }
@@ -41,7 +43,6 @@ char *display_list_and_wait_for_selection(t_select **select)
 
     c = 0;
     print_to_screen(*select);
-    ft_printf("reading from stdin\n");
     while(1)
     {
         process_input(select);
@@ -58,6 +59,6 @@ void intitalise_select_display(t_select **ptr_select)
     col = (*ptr_select)->screenrows;
     init_cursor(ptr_select);
     if (get_window_size(&row, &col) == -1)
-        perror_exit("failure to initialise select screen");
+        perror_exit("GET WINDOW SIZE RETURNED -1");
 
 }

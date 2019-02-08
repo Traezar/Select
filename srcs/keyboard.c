@@ -5,21 +5,58 @@
 
 void escape_program(t_select **select)
 {
-     ft_printf("Escape_program\n");
-    (void) select; 
+    t_select *tmp;
+
+    tmp = *select;
+     
+     disableRawMode(tmp->original);
+     screen_clear();
+     ft_printf("ft_selected exited!\n");
     exit(0);
 }
 
 void select_deselect(t_select **select)
 {
-    (void) select;
-    ft_printf("seleted option\n");
+    t_options *list;
+
+    list = (*select)->options;
+    while (list && !list->cursor)
+     list = list->next;
+    if (list->selected)
+        list->selected = 0;
+    else if (!(list->selected))
+        list->selected = 1;
+    screen_clear();
+    print_to_screen(*select);
+    ft_printf("seleted/deselected option\n");
 }
 
 void delete_option(t_select **select)
 {
-    (void) select;
-    ft_printf("deleted option\n");
+     t_options *list;
+     t_options *del;
+
+    ft_printf("Entered Delete option\n");
+    list = (*select)->options;
+    if (list->next == NULL)
+        escape_program(select);
+    if (list->cursor == 1)
+    {
+        del = list;
+        (*select)->options = list->next;
+        list = list->next;
+    }
+    else
+    {
+        while (list && !(list->next->cursor))
+            list = list->next;
+        del = list->next;
+        list->next = list->next->next;
+    }
+    free_option_node(del);
+    list->cursor = 1;
+    screen_clear();
+    print_to_screen(*select);
 }
 
 
@@ -74,7 +111,7 @@ void process_input(t_select **select)
     i = 0;
     c = readinput();
     ft_printf("this is the value of key entered: %d\n" ,c);
-    if (c == 31 || c == 51)
+    if (c == 31 || c == 51 || c == 126)
     c = 30;
     while (i < 7)
     {

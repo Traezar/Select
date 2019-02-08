@@ -21,7 +21,7 @@ all:libft_lib select
 libft_lib:
 	@make -C libft
 select:
-	@gcc -o $(NAME) $(CFLAGS) $(SRC) -I $(HDR) -L libft -lft -ltermcap
+	@gcc -o $(NAME) $(CFLAGS) $(SRC) -I $(HDR) -L libft -lft -ltermcap -g
 	@echo "\033[1;32m[Compiled]\033[0m: \033[1;33m./ft_select\033[0m"
 
 clean:

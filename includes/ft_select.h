@@ -23,6 +23,7 @@
 
 typedef struct s_select
 {
+    struct s_options *original_options;
     struct s_options *options;
     int screenrows;
     int screencols;
@@ -56,8 +57,6 @@ void intitalise_select_display(t_select **ptr_select);
 
 /*cursor.c*/
 void init_cursor(t_select **ptr_select);
-void screen_clear();
-int get_cursor_pos(int *rows, int *cols);
 void move_cursor_up(t_select **select);
 void move_cursor_down(t_select **select);
 void move_cursor_left(t_select **select);
@@ -78,14 +77,18 @@ int check_print_type(t_options *list);
 /*list.c*/
 void create_and_push_list_nodes(t_options **ret, char *name);
 t_options *copy_arguments_to_linked_list(char **av, int ac);
+void duplicate_node(t_options *node_ptr, t_options **ptr_to_head);
+void duplicate_list(t_options *original, t_options **ptr_to_head);
+void free_option_node(t_options *node);
 
 /*terminal.c*/
-void enableRawMode(struct termios original);
+struct termios enableRawMode(void);
 void disableRawMode(struct termios original);
 
 /*error.c*/
 int select_usage(void);
 int perror_exit(char *str);
+void screen_clear();
 
 
 

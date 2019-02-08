@@ -21,7 +21,7 @@ int check_print_type(t_options *list)
 		return 0;
 	if (list->cursor == 1 && list->selected == 1)
 	{
-		ft_printf("\e[4:7m");
+		ft_printf("\e[4;7m");
 		ft_printf("%s", list->name);
 		ft_printf("\e[0m");
 	}

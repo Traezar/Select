@@ -16,3 +16,7 @@ int perror_exit(char *str)
     ft_printf("ft_select: %s", str);
     exit(1);
 }
+void screen_clear()
+{
+    ft_printf("\x1b[2J\x1b[H");
+}
