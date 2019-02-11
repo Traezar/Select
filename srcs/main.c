@@ -12,7 +12,8 @@ int main (int ac,char **av)
     if (ac <= 1)
      select_usage();
     else
-    {
+    {   
+
         select.termtype = getenv("TERM");
         if (tgetent(NULL, select.termtype))
             ret =selection(&select,av, ac);
@@ -28,7 +29,7 @@ char *selection(t_select *select, char **av, int ac)
     char *selected;
 
     selected = NULL;
-    select->original = enableRawMode();
+    g_original = enableRawMode();
     intitalise_select_display(&select);
     select->options = copy_arguments_to_linked_list(av, ac);
     select->original_options = NULL;
@@ -43,9 +44,16 @@ char *display_list_and_wait_for_selection(t_select **select)
 
     c = 0;
     print_to_screen(*select);
+    signal(SIGTSTP, sig_handler_suspend);
+    signal(SIGINT, sig_handler_stop);
+    signal(SIGCONT, sig_handler_cont);
+    signal(0,sig_handler_default);
     while(1)
     {
         process_input(select);
+        g_state = **select;
+        screen_clear();
+        print_to_screen(*select);
     }
     return ("DONE!\n");
 }

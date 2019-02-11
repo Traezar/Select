@@ -20,3 +20,4 @@ void screen_clear()
 {
     ft_printf("\x1b[2J\x1b[H");
 }
+

@@ -30,7 +30,6 @@ typedef struct s_select
     int cursor_x;
     int cursor_y;
     char *termtype;
-    struct termios original;
 } t_select;
 
 typedef struct s_dispatch 
@@ -48,12 +47,15 @@ typedef struct s_options
     bool deleted; 
 } t_options;
 
-
+typedef void (*sig_handler)(int sig, struct termios);
+struct termios g_original;
+t_select g_state;
 
 /*main.c*/
 char *display_list_and_wait_for_selection(t_select **list_ptr);
 char *selection(t_select *select, char **av, int ac);
 void intitalise_select_display(t_select **ptr_select);
+
 
 /*cursor.c*/
 void init_cursor(t_select **ptr_select);
@@ -84,11 +86,17 @@ void free_option_node(t_options *node);
 /*terminal.c*/
 struct termios enableRawMode(void);
 void disableRawMode(struct termios original);
+void display_cursor();
+void hide_cursor();
 
 /*error.c*/
 int select_usage(void);
 int perror_exit(char *str);
 void screen_clear();
+void sig_handler_cont();
+void sig_handler_stop();
+void sig_handler_suspend();
+void sig_handler_default();
 
 
 

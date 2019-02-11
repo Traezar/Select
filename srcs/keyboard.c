@@ -4,14 +4,11 @@
 
 
 void escape_program(t_select **select)
-{
-    t_select *tmp;
-
-    tmp = *select;
-     
-     disableRawMode(tmp->original);
+{     
+     disableRawMode(g_original);
      screen_clear();
      ft_printf("ft_selected exited!\n");
+     (void)select;
     exit(0);
 }
 

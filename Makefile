@@ -13,7 +13,7 @@
 NAME = ft_select
 OBJ = *.o
 
-SRC = srcs/main.c srcs/print_type.c srcs/error.c srcs/keyboard.c srcs/terminal.c srcs/list.c srcs/window.c srcs/cursor.c
+SRC = srcs/main.c srcs/signal.c srcs/error.c srcs/keyboard.c srcs/terminal.c srcs/list.c srcs/window.c srcs/cursor.c
 HDR = includes/select.h 
 
 all:libft_lib select
