@@ -1,10 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   window.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rsathiad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/13 16:34:38 by rsathiad          #+#    #+#             */
+/*   Updated: 2019/02/13 16:41:27 by rsathiad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_select.h"
 
-
-// whenever  get a signal named SIGWINCH, use ioctl with code TIOCGWINSZ gets the window size;
-int get_window_size(int *rows, int *cols)
+int		get_window_size(int *rows, int *cols)
 {
-	struct winsize ws;
+	struct winsize	ws;
 
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_col <= 0)
 		return (-1);
@@ -15,35 +25,63 @@ int get_window_size(int *rows, int *cols)
 		return (0);
 	}
 }
-int check_print_type(t_options *list)
+
+int		set_display_len(t_options *input)
 {
-	if (list->deleted)
-		return 0;
-	if (list->cursor == 1 && list->selected == 1)
-	{
-		ft_printf("\e[4;7m");
-		ft_printf("%s", list->name);
-		ft_printf("\e[0m");
-	}
-	else if (list->cursor ==1)
-	{
-		ft_printf("\e[4m");
-		ft_printf("%s", list->name);
-		ft_printf("\e[0m");
+	int			len;
+	int			i;
+	char		*str;
+	t_options	*list;
 
+	len = 0;
+	list = input;
+	if (!list)
+		perror_exit("list is empty\n");
+	while (list != NULL)
+	{
+		i = 0;
+		str = list->name;
+		while (str[i] != '\0')
+		{
+			len++;
+			i++;
+		}
+		len += 4;
+		i = 0;
+		list = list->next;
 	}
-	else if (list->selected == 1)
-	{	ft_printf("\e[7m");
-		ft_printf("%s", list->name);
-		ft_printf("\e[0m");
-	}
-	else
-		ft_printf("%s", list->name);
-
-	return 1;
+	len += 5;
+	return (len);
 }
 
-void print_to_screen (t_select *select)
+int		check_print_type(t_options *list)
+{
+	if (list->deleted)
+		return (0);
+	if (list->cursor == 1 && list->selected == 1)
+	{
+		write(2, "\e[4;7m", 6);
+		write(2, list->name, ft_strlen(list->name));
+		write(2, "\e[0m", 4);
+	}
+	else if (list->cursor == 1)
+	{
+		write(2, "\e[4m", 4);
+		write(2, list->name, ft_strlen(list->name));
+		write(2, "\e[0m", 4);
+	}
+	else if (list->selected == 1)
+	{
+		write(2, "\e[7m", 4);
+		write(2, list->name, ft_strlen(list->name));
+		write(2, "\e[0m", 4);
+	}
+	else
+		write(2, list->name, ft_strlen(list->name));
+	return (1);
+}
+
+void	print_to_screen(t_select *select)
 {
 	t_options *list;
 
@@ -53,12 +91,12 @@ void print_to_screen (t_select *select)
 		if (check_print_type(list))
 		{
 			if (list->next != NULL)
-				write (1,"\t",1);
+				write(2, "\t", 1);
 			else
-				write(1,"\n",1);
+				write(2, "\n", 1);
 		}
 		else if (list->next == NULL)
-			write(1,"\n",1);
+			write(2, "\n", 1);
 		list = list->next;
 	}
 	return ;

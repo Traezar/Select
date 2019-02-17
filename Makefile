@@ -13,7 +13,8 @@
 NAME = ft_select
 OBJ = *.o
 
-SRC = srcs/main.c srcs/signal.c srcs/error.c srcs/keyboard.c srcs/terminal.c srcs/list.c srcs/window.c srcs/cursor.c
+SRC = srcs/main.c srcs/signal.c srcs/error.c srcs/keyboard.c srcs/terminal.c \
+srcs/list.c srcs/window.c srcs/cursor.c srcs/free.c
 HDR = includes/select.h 
 
 all:libft_lib select
@@ -21,7 +22,7 @@ all:libft_lib select
 libft_lib:
 	@make -C libft
 select:
-	@gcc -o $(NAME) $(CFLAGS) $(SRC) -I $(HDR) -L libft -lft -ltermcap -g
+	@gcc -o $(NAME) $(CFLAGS) $(SRC) -I $(HDR) -L libft -lft -ltermcap
 	@echo "\033[1;32m[Compiled]\033[0m: \033[1;33m./ft_select\033[0m"
 
 clean:
