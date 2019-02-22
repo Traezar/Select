@@ -36,7 +36,7 @@ int		set_display_len(t_options *input)
 	len = 0;
 	list = input;
 	if (!list)
-		perror_exit("list is empty\n");
+		sig_stop_handler();
 	while (list != NULL)
 	{
 		i = 0;
