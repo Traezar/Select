@@ -36,7 +36,7 @@ int		set_display_len(t_options *input)
 	len = 0;
 	list = input;
 	if (!list)
-		sig_stop_handler();
+		sig_handler_stop();
 	while (list != NULL)
 	{
 		i = 0;
